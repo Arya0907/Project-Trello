@@ -55,7 +55,7 @@
                             <label for="deskripsi" class="form-label text-muted fw-medium">Deskripsi Barang</label>
                             <input type="text" class="form-control form-control-lg border-0 bg-light"
                                 name="deskripsi" id="deskripsi" placeholder="Masukan deskripsi barang"
-                                value="{{ old('deskripsi') }}">
+                                value="{{ $item['deskripsi'] }}">
                         </div>
                         
                         <div class="d-grid gap-2 mt-5">

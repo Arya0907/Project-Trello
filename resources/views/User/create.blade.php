@@ -24,7 +24,7 @@
                         <div class="mb-4">
                             <label for="name" class="form-label text-muted fw-medium">Nama</label>
                             <input type="text" class="form-control form-control-lg border-0 bg-light" 
-                                   name="name" id="name" placeholder="Masukkan nama barang"  value="{{old('name')}}">
+                                   name="name" id="name" placeholder="Masukkan nama user"  value="{{old('name')}}">
                         </div>
                         
                         <div class="mb-4">
