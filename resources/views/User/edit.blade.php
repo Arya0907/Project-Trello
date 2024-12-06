@@ -50,6 +50,7 @@
                                 <option selected disabled hidden>Pilih Role</option>
                                 <option value="admin"  {{$user['role'] == 'admin' ? 'selected' : ''}}>Admin</option>
                                 <option value="kasir" {{$user['role'] == 'kasir' ? 'selected' : ''}}>Kasir</option>
+                                <option value="user" {{$user['user'] == 'user' ? 'selected' : ''}}>User</option>
                             </select>
                         </div>
                         

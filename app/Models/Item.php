@@ -17,4 +17,14 @@ class Item extends Model
         'deskripsi',
         'image',
     ];
+
+
+    public function orders()
+{
+    return $this->hasMany(Order::class, 'item_id');
+}
+   public function carts()
+{
+    return $this->hasMany(Cart::class, 'item_id');
+    }
 }

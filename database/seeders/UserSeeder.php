@@ -28,6 +28,13 @@ class UserSeeder extends Seeder
             'role'=>'kasir',
         ]);
 
+        User::create([
+            'name'=>'user',
+            'email'=>'user@gmail.com',
+            'password'=>hash::make('user123'),
+            'role'=>'user',
+        ]);
+
 
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class isLogin
+class isKasir
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,10 @@ class isLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-      
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('failed', 'Anda harus login terlebih dahulu');
-        }
+        if (Auth::user()->role !== 'kasir') {
+            return redirect()->route('home')->with('failed', 'Anda tidak memiliki akses sebagai admin');
+        }else{
         return $next($request);
+        }
     }
-
 }

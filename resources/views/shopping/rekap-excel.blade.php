@@ -1,3 +1,5 @@
+
+
 @extends('templates.app')
 
 @section('content-dinamis')
@@ -5,9 +7,6 @@
         <div class="d-flex justify-content-between mb-4 align-items-center">
             <h4 class="dashboard-title">Data Penjualan</h4>
             <div class="d-flex gap-3">
-                <a href="{{ route('orders.create') }}" class="btn btn-success">
-                    <i class="fas fa-plus me-2"></i>Pembelian
-                </a>
                 <form class="d-flex" role="search" action="{{ route('orders') }}" method="GET">
                     <input class="form-control me-2" type="date" placeholder="Cari Pesanan" aria-label="Search"
                         name="search">
@@ -15,6 +14,7 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </form>
+                <a href="{{route('orders.export.excel')}}" class="btn btn-primary"><i  style="color: #ffffff;">Excel</i></a>
                 <a href="/" class="btn btn-primary">
                     <i class="fa-solid fa-house"></i>
                 </a>
@@ -80,12 +80,10 @@
                                 <th>Kasir</th>
                                 <th>Tanggal</th>
                                 <th>Total Harga</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($orders as $index => $order)
-                            {{-- @dd($order) --}}
                                 <tr class="table-row-animate">
                                     <td>{{ ($orders->currentPage() - 1) * $orders->perPage() + ($index + 1) }}</td>
                                     <td>
@@ -94,26 +92,19 @@
                                         </div>
                                     </td>
                                     <td>
-
-                                        {{-- @php
-                                            $items = json_decode($order->items);
-                                        @endphp --}}
-                                       
                                         @foreach ($order->items as $item)
-                                        <div class="order-item">
-                                            <span class="item-name">{{ $item['name_item'] }}</span>
-                                            <span class="item-quantity">{{ $item['quantity'] }} pcs</span>
-                                            <span class="item-price">Rp {{ number_format($item['sub_price'], 0, ',', '.') }}</span>
-                                        </div>
-                                    @endforeach
-                                    
+                                            <div class="order-item">
+                                                <span class="item-name">{{ $item['name_item'] }}</span>
+                                                <span class="item-quantity">{{ $item['quantity'] }} pcs</span>
+                                                <span class="item-price">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
+                                            </div>
+                                        @endforeach
                                     </td>
                                     <td>
-
                                         <div class="cashier-info">
-                                            <span class="cashier-name">{{ $order['user']['name'] }}</span>
+                                            <span class="cashier-name">{{ $order['user']['name']}}</span>
                                         </div>
-                                      
+                                        
                                     </td>
                                     <td>
                                         <div class="date-info">
@@ -128,11 +119,6 @@
                                             <span class="total-price">Rp {{ number_format($order->total_price + $ppn, 0, ',', '.') }}</span>
                                             <span class="ppn-info">Inc. PPN</span>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('export.pdf', $order->id) }}" class="btn btn-download">
-                                            <i class="fas fa-download me-1"></i> Download
-                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -150,7 +136,20 @@
 
 @push('style')
     <style>
-       
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --success-color: #4CAF50;
+            --info-color: #2196F3;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,.075);
+            --shadow-md: 0 4px 6px rgba(0,0,0,.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,.1);
+            --border-radius: 1rem;
+        }
 
         /* Dashboard Title */
         .dashboard-title {

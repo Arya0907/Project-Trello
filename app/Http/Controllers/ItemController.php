@@ -16,18 +16,16 @@ class ItemController extends Controller
         return view('items.index',compact('items'));
     }
 
-    public function shopp()
-    {
-        $items = Item::all();
-        return view('shopping.index',compact('items'));
-    }
+    
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('items.create');
+        $items = Item::all();
+        return view('items.create', compact('items'));
     }
 
     /**

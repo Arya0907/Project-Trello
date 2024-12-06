@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -39,6 +41,45 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
+    public function profile(){
+        $user = Auth::user();
+        $orders = $user->orders()->get(); // Menggunakan get() untuk mengambil data langsung
+       // Memeriksa hasilnya
+    // dd($orders);
+    
+        return view('User.profile', compact('orders'));
+    }
+
+
+
+
+    public function updateUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'password' => 'nullable|confirmed|min:8', // Password opsional, tapi harus dikonfirmasi dan minimal 8 karakter
+        ]);
+    
+        $user = Auth::user();
+    
+        // Update nama pengguna
+        $user->name = $request->name;
+    
+        // Jika password diberikan, hash terlebih dahulu sebelum disimpan
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);  // Meng-hash password menggunakan bcrypt
+        }
+    
+        // Simpan pengguna yang telah diperbarui
+        $user->save();
+    
+        return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui!');
+    }
+    
+    
+
+    
+
 
     public function index(Request $request)
     {
@@ -70,7 +111,7 @@ class UserController extends Controller
         User::create([
             'name'=>$request->name,
             'email'=>$request->email,
-            'password'=>bcrypt($request->password),
+            'password'=>Hash::make($request->password),
             'role'=>$request->role,
         ]);
 
@@ -109,7 +150,7 @@ class UserController extends Controller
         User::where('id',$id)->update([
             'name'=>$request->name,
             'email'=>$request->email,
-            'password'=>bcrypt($request->password),
+            'password'=> bcrypt($request->password),
             'role'=>$request->role,
         ]);
 

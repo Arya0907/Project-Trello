@@ -49,6 +49,7 @@
                                 <option selected disabled hidden>Role</option>
                                 <option value="admin" {{old('admin')}}>Admin</option>
                                 <option value="kasir" {{old('kasir')}}>Kasir</option>
+                                <option value="user" {{old('user')}}>user</option>
                             </select>
                         </div>
                         

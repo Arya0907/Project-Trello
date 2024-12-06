@@ -18,4 +18,14 @@ class Order extends Model
     protected $casts = [
         'items' => 'array'
     ];
+
+    public function User()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+
+public function Items()
+{
+    return $this->hasMany(Item::class);
+}
 }

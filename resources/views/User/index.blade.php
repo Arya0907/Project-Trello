@@ -26,7 +26,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>#</th>
-                            <th>Nama</th>
+                            <th>User</th>
                             <th>Email</th>
                             <th>Password</th>
                             <th>Role</th>
@@ -38,7 +38,16 @@
                         @foreach($users as $index => $user)
                         <tr>
                             <td>{{ ($users->currentPage() - 1) * $users->perPage() + $index + 1 }}</td>
-                            <td>{{ $user['name'] }}</td>
+                            <td>
+                                <span>
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user['name']) }}&background=FF6B35&color=ffffff" 
+                                         alt="Profile" 
+                                         class="profile-img"
+                                         data-bs-toggle="dropdown" 
+                                         aria-expanded="false">    
+                                </span>
+                                {{ $user['name'] }}
+                            </td>
                             <td>{{ $user['email'] }}</td>
                             <td>{{ $user['password'] }}</td>
                             <td>{{ $user['role'] }}</td>
@@ -48,6 +57,7 @@
                             </td>
                         </tr>
                         @endforeach
+                        
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end mt-3">
